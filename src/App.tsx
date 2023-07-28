@@ -1,4 +1,3 @@
-import React from "react";
 import AppRouter from "./App.router.tsx";
 import Layout from "./Components/Layout";
 

@@ -1,43 +1,9 @@
-import React from "react";
-import footerData from "../../Content/footer.data.json";
-
-interface IIcon {
-  name: string;
-  url: string;
-}
-
-interface ITag {
-  name: string;
-  url: string;
-}
-
-interface IBottomBar {
-  bottom: {
-    label: string;
-    icons: IIcon[];
-    tags: ITag[];
-  };
-}
-
-interface IFooterSection {
-  title: string;
-  url: string;
-  children: IFooterSection[];
-}
-
-interface IContent {
-  content: {
-    footerSections: IFooterSection[];
-  };
-}
-
-interface IFooterData extends IBottomBar, IContent {}
+import { footerData } from "../../Content/footer.en.ts";
 
 export const Footer: React.FC = () => {
-  const FooterData: IFooterData = footerData;
   const Sections = (
     <>
-      {FooterData.content.footerSections.map((section, index) => {
+      {footerData.content.footerSections.map((section, index) => {
         return (
           <div key={index}>
             <span className="footer-title">{section.title}</span>
@@ -53,9 +19,35 @@ export const Footer: React.FC = () => {
       })}
     </>
   );
+  const BottomBar = (
+    <div className="flex-none">
+      <div className="divider" />
+      <div className="flex flex-wrap items-center justify-center md:justify-between">
+        <div className="flex-none container mx-auto">
+          <span className="footer-title">{footerData.bottom.label}</span>
+        </div>
+        <div className="flex-none">
+          {footerData.bottom.tags.map((tag, index) => {
+            return (
+              <a
+                key={index}
+                className="btn btn-ghost btn-sm rounded-btn"
+                href={tag.url}
+              >
+                {tag.name}
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
   return (
-    <footer className="footer p-10 lg:px-60 bg-base-200 text-base-300-content">
-      {Sections}
-    </footer>
+    <>
+      <footer className=" p-10 lg:px-60 bg-base-100 h-80 text-base-300-content">
+        <div className="footer">{Sections}</div>
+        <div>{BottomBar}</div>
+      </footer>
+    </>
   );
 };
